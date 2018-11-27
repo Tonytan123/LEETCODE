@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int init = 0;
+        int length = nums.size();
+        if(length == 1)
+            return 0;
+        int max = 0;
+        int pos = 1;
+        int pnext = init;
+        bool flag = false;
+        while(init + nums[init] < length - 1){
+            for(int t = 1; t <= nums[init]; ++t){
+                if(init + t + nums[init + t] < length){
+                    if(max < init + t + nums[init + t]){
+                        max = init + t + nums[init + t];
+                        pnext = init + t;
+                    }
+                }else{
+                    pos++;
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag)
+                break;
+            pos++;
+            init = pnext;
+        }
+        return pos;
+    }
+};
