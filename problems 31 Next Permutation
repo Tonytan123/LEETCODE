@@ -1,0 +1,71 @@
+class Solution {
+public:
+	void nextPermutation(vector<int>& nums) {
+		int length = nums.size();
+		if (length <= 1)
+			return;
+		int temp = 0;
+		int j = 0;
+		bool flag = true;
+		int t = 0;
+		for (int i = length - 1; i >= 1; --i) {
+			if (nums[i] <= nums[i - 1]) {
+				t = i;
+				continue;
+			}else {
+				temp = nums[i];
+				j = i;
+				flag = false;
+				break;
+			}
+		}
+		if (!flag) {
+			if (j == length - 1) {
+				nums[j] = nums[j - 1];
+				nums[j - 1] = temp;
+			}else {
+				int k = length - 1;
+				int m = j;
+				temp = -1;
+				while (k >= j) {
+					if (nums[k] > nums[j - 1] ) {
+						if (temp == -1) {
+							temp = nums[k];
+							m = k;
+						}
+						else {
+							if (nums[k] < temp) {
+								temp = nums[k];
+								m = k;
+							}
+						}
+						
+					}
+					k--;
+				}
+				nums[m] = nums[j - 1];
+				nums[j - 1] = temp;
+				Swap(nums, j, length - 1);
+			}
+			return;
+		}
+
+		temp = nums[length - 1];
+		for (int i = length - 1; i > length - 1 - i; --i) {
+			temp = nums[i];
+			nums[i] = nums[length - 1 - i];
+			nums[length - 1 - i] = temp;
+		}
+
+		return;
+	}
+private:
+	void Swap(vector<int> & nums, int j, int length) {
+		for (int i = length; i > j; --i, ++j) {
+			int temp = nums[i];
+			nums[i] = nums[j];
+			nums[j] = temp;
+		}
+		return;
+	}
+};
